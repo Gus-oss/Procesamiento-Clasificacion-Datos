@@ -3,3 +3,9 @@ pipeline/config/credentials.py
 *.pyc
 __pycache__/
 .env
+
+
+#Carpetas de datos 
+data/raw
+data/processed
+
