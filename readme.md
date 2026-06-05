@@ -39,3 +39,6 @@ pipeline_adg/
 - Bots/astroturfing — Cuentas con comportamiento anómalo en sus replies
 - Red de aliados — Grafo de menciones frecuentes (NetworkX)
 - Discurso vs realidad — Sus palabras clave vs noticias de ese periodo
+
+## Seguimiento: 
+- [05/06/2026] : se probo para Twetter, pero twetter ya no permite hacer descargas de tweters gratuitos. Se evalua la opcion de pagar la suscripción de 1000 USD al mes para extraer la información. 
