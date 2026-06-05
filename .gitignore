@@ -1,3 +1,6 @@
 # No subir la carpte de las credenciales
 
-pipeline/config/credentials.py
+pipeline/config/credentials.pycredentials.py
+*.pyc
+__pycache__/
+.env
