@@ -171,12 +171,16 @@ class YouTubeExtractor:
         print(f"    {len(df)} comentarios extraídos en total")
         return df
 
-    # ─────────────────────────────────────────
-    # 6. Guardar datos
-    # ─────────────────────────────────────────
-    def save(self, df, filename):
-        path = f"data/raw/{filename}_{datetime.now().strftime('%Y%m%d')}.csv"
-        os.makedirs("data/raw", exist_ok=True)
-        df.to_csv(path, index=False, encoding="utf-8-sig")
-        print(f"     Guardado en: {path}")
-        return path
+# ─────────────────────────────────────────
+# 6. Guardar datos
+# ─────────────────────────────────────────
+def save(self, df, filename):
+    # Ruta absoluta basada en la ubicación del archivo extractor
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    output_dir = os.path.join(base_dir, "data", "raw")
+    os.makedirs(output_dir, exist_ok=True)
+    
+    path = os.path.join(output_dir, f"{filename}_{datetime.now().strftime('%Y%m%d')}.csv")
+    df.to_csv(path, index=False, encoding="utf-8-sig")
+    print(f"    Guardado en: {path}")
+    return path
