@@ -32,3 +32,10 @@ pipeline_adg/
 │
 └── main.py                  # Orquestador del pipeline
 ```
+
+## Objetivo
+- Agenda setting - ¿Que temas impulsa antes de eventos políticos?
+- Sentiment shift — ¿Cómo cambia la percepción ciudadana en el tiempo?
+- Bots/astroturfing — Cuentas con comportamiento anómalo en sus replies
+- Red de aliados — Grafo de menciones frecuentes (NetworkX)
+- Discurso vs realidad — Sus palabras clave vs noticias de ese periodo
