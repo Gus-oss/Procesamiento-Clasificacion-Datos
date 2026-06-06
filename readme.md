@@ -7,10 +7,11 @@ _**Autor:**_ Gustavo de Jesús Escobar Mata.
 
 Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia de Datos de la Facultad de Ciencias Fisico Matematicas de la Universidad Autonoma de Nuevo León que imparte el Dr. [Alberto Benavides](https://github.com/albertobenavides) correspondiente al Cuarto Tetramestre llevado acabo de Mayo-Agosto del 2026.
 
+# Tareas:
 
 
 ```bash
-pipeline_adg/
+pipeline/
 │
 ├── config/
 │   └── credentials.py      # Tus tokens (nunca subir a GitHub)
@@ -27,8 +28,6 @@ pipeline_adg/
 │   ├── raw/                 # Datos crudos
 │   └── processed/           # Datos limpios
 │
-├── dashboard/
-│   └── visualizer.py        # Gráficas y reportes
 │
 └── main.py                  # Orquestador del pipeline
 ```
