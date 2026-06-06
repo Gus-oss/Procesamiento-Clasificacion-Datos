@@ -9,12 +9,14 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 
 # Tareas:
 
+ - Tarea 2: **Objetivo:** Elegir un conjunto de datos de reseñas de usuarios y realizarles un método de vectorización adecuado ademas de estudiar sus proiedades. Finalmente realizar un análisis de sentimiento al conjunto de datos. **Solución:** Se descargaron 
+
 
 ```bash
 pipeline/
 │
 ├── config/
-│   └── credentials.py      # Tus tokens (nunca subir a GitHub)
+│   └── credentials.py      
 │
 ├── extractors/
 │   ├── twitter_extractor.py
