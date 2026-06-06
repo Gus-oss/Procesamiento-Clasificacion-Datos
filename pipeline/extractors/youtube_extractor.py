@@ -181,5 +181,5 @@ class YouTubeExtractor:
     
       path = os.path.join(output_dir, f"{filename}_{datetime.now().strftime('%Y%m%d')}.csv")
       df.to_csv(path, index=False, encoding="utf-8-sig")
-      print(f"   💾 Guardado en: {path}")
+      print(f"    Guardado en: {path}")
       return path
