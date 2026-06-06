@@ -60,7 +60,7 @@ class SentimentAnalyzer:
     # 3. Analizar dataframe completo
     # ─────────────────────────────────────────
     def analyze_dataframe(self, df, text_col="texto"):
-        print(f"\n🔍 Analizando sentimiento de {len(df)} comentarios...")
+        print(f"\n Analizando sentimiento de {len(df)} comentarios...")
 
         labels  = []
         scores  = []
