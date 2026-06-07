@@ -43,7 +43,7 @@ class YouTubeExtractor:
         return canales
 
     # ─────────────────────────────────────────
-    # 2. Buscar videos donde aparece o lo mencionan
+    # 2. Buscar videos
     # ─────────────────────────────────────────
     def search_videos(self, query="Samuel García", max_results=50):
         print(f"\n Buscando videos: '{query}'")
@@ -63,6 +63,12 @@ class YouTubeExtractor:
             response = request.execute()
 
             for item in response["items"]:
+                #  Validación: ignorar items que no sean videos
+                if item["id"].get("kind") != "youtube#video":
+                    continue
+                if "videoId" not in item["id"]:
+                    continue
+
                 videos.append({
                     "video_id"    : item["id"]["videoId"],
                     "titulo"      : item["snippet"]["title"],
@@ -76,7 +82,7 @@ class YouTubeExtractor:
                 break
 
         df = pd.DataFrame(videos)
-        print(f"    {len(df)} videos encontrados")
+        print(f"     {len(df)} videos encontrados")
         return df
 
     # ─────────────────────────────────────────
@@ -86,7 +92,6 @@ class YouTubeExtractor:
         print(f"\n Obteniendo estadísticas de {len(df_videos)} videos...")
         stats = []
 
-        # YouTube acepta hasta 50 IDs por llamada
         video_ids = df_videos["video_id"].tolist()
         chunks = [video_ids[i:i+50] for i in range(0, len(video_ids), 50)]
 
@@ -100,11 +105,11 @@ class YouTubeExtractor:
             for item in response["items"]:
                 s = item.get("statistics", {})
                 stats.append({
-                    "video_id"         : item["id"],
-                    "vistas"           : int(s.get("viewCount", 0)),
-                    "likes"            : int(s.get("likeCount", 0)),
-                    "comentarios_total": int(s.get("commentCount", 0)),
-                    "duracion"         : item["contentDetails"]["duration"]
+                    "video_id"          : item["id"],
+                    "vistas"            : int(s.get("viewCount", 0)),
+                    "likes"             : int(s.get("likeCount", 0)),
+                    "comentarios_total" : int(s.get("commentCount", 0)),
+                    "duracion"          : item["contentDetails"]["duration"]
                 })
 
         df_stats = pd.DataFrame(stats)
@@ -133,13 +138,13 @@ class YouTubeExtractor:
                 for item in response["items"]:
                     c = item["snippet"]["topLevelComment"]["snippet"]
                     comments.append({
-                        "video_id"  : video_id,
+                        "video_id"    : video_id,
                         "titulo_video": titulo,
-                        "autor"     : c["authorDisplayName"],
-                        "texto"     : c["textDisplay"],
-                        "likes"     : c["likeCount"],
-                        "fecha"     : c["publishedAt"],
-                        "respuestas": item["snippet"]["totalReplyCount"]
+                        "autor"       : c["authorDisplayName"],
+                        "texto"       : c["textDisplay"],
+                        "likes"       : c["likeCount"],
+                        "fecha"       : c["publishedAt"],
+                        "respuestas"  : item["snippet"]["totalReplyCount"]
                     })
 
                 next_page_token = response.get("nextPageToken")
@@ -147,8 +152,7 @@ class YouTubeExtractor:
                     break
 
         except Exception as e:
-            # Algunos videos tienen comentarios desactivados
-            print(f"       Video {video_id}: comentarios desactivados")
+            print(f"        Video {video_id}: comentarios desactivados")
 
         return comments
 
@@ -168,18 +172,18 @@ class YouTubeExtractor:
             all_comments.extend(comments)
 
         df = pd.DataFrame(all_comments)
-        print(f"    {len(df)} comentarios extraídos en total")
+        print(f"     {len(df)} comentarios extraídos en total")
         return df
+
     # ─────────────────────────────────────────
-    # # 6. Guardar datos
-    # # ─────────────────────────────────────────
+    # 6. Guardar datos
+    # ─────────────────────────────────────────
     def save(self, df, filename):
-     # Ruta absoluta basada en la ubicación del archivo extractor
-      base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-      output_dir = os.path.join(base_dir, "data", "raw")
-      os.makedirs(output_dir, exist_ok=True)
-    
-      path = os.path.join(output_dir, f"{filename}_{datetime.now().strftime('%Y%m%d')}.csv")
-      df.to_csv(path, index=False, encoding="utf-8-sig")
-      print(f"    Guardado en: {path}")
-      return path
+        base_dir   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        output_dir = os.path.join(base_dir, "data", "raw")
+        os.makedirs(output_dir, exist_ok=True)
+
+        path = os.path.join(output_dir, f"{filename}_{datetime.now().strftime('%Y%m%d')}.csv")
+        df.to_csv(path, index=False, encoding="utf-8-sig")
+        print(f"     Guardado en: {path}")
+        return path
