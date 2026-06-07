@@ -25,6 +25,7 @@ Análisis-Sentimiento/
 │   └── credentials.py      
 │
 ├── extractors/
+│   ├── facebook_extractor.py
 │   ├── twitter_extractor.py
 │   └── youtube_extractor.py
 │
