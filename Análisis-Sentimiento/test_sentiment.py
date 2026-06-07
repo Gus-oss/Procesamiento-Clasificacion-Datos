@@ -10,7 +10,7 @@ base_dir      = os.path.dirname(os.path.abspath(__file__))
 data_dir      = os.path.join(base_dir, "data", "raw")
 
 # Busca el CSV más reciente de comentarios
-csv_files = [f for f in os.listdir(data_dir) if f.startswith("comentarios_adg")]
+csv_files = [f for f in os.listdir(data_dir) if f.startswith("comentarios_sg")]
 csv_files.sort(reverse=True)
 latest    = os.path.join(data_dir, csv_files[0])
 
@@ -27,7 +27,7 @@ df_result = analyzer.analyze_dataframe(df, text_col="texto")
 # ─────────────────────────────────────────
 # Guardar resultados
 # ─────────────────────────────────────────
-analyzer.save(df_result, "sentimiento_adg")
+analyzer.save(df_result, "sentimiento_sg")
 
 # Vista previa
 print("\n Muestra de resultados:")
