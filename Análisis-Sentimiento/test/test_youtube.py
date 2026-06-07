@@ -1,4 +1,7 @@
 # test_youtube.py
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from extractors.youtube_extractor import YouTubeExtractor
 
 ext = YouTubeExtractor()
