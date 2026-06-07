@@ -9,7 +9,7 @@ canales = ext.get_channel_id("Samuel García Nuevo Leon")
 # PASO 2 — Buscar videos donde aparece
 df_videos = ext.search_videos(
     query="Samuel García",
-    max_results=20        # empezamos con 20
+    max_results=30        #Numero de videos a extraer 
 )
 print(df_videos[["titulo", "canal", "fecha"]].to_string())
 
@@ -22,7 +22,7 @@ ext.save(df_videos, "videos_sg")
 # PASO 5 — Extraer comentarios
 df_comentarios = ext.get_all_comments(
     df_videos,
-    max_comments_per_video=50   # 50 por video para empezar
+    max_comments_per_video=60   #Numero de comentarios a extraer por video
 )
 print(f"\n Total comentarios: {len(df_comentarios)}")
 print(df_comentarios[["autor", "texto", "likes"]].head(10))
