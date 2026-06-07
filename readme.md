@@ -9,7 +9,7 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 
 # Tareas
  ## Tarea 1
-  - **Objetivo** Realizar un  
+  - **Objetivo** Realizar un análisis estadistico sobre algún origen de datos textual (libros, publicaciones en redes sociales, entradas de blog, discursos politicos,...) sobre dos o mas fuentes de uno o mas autores. Análizar estadistica descriptiva basica, frcuencias, discuros de palabras , n-gramas, usos de signo de puntuación, emojis, etc. 
   - **Solución**
  ## Tarea 2: 
   - **Objetivo:** Elegir un conjunto de datos de reseñas de usuarios y realizarles un método de vectorización adecuado ademas de estudiar sus proiedades. Finalmente realizar un análisis de sentimiento al conjunto de datos. 
