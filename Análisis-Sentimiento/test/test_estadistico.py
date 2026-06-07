@@ -15,11 +15,9 @@ import unicodedata
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 data_dir = os.path.join(base_dir, "data", "raw")
 
-# Posts de Samuel Garcia (autor)
 posts_file = sorted([f for f in os.listdir(data_dir) if f.startswith("posts_samuel_fb")])[-1]
 df_posts   = pd.read_csv(os.path.join(data_dir, posts_file))
 
-# Comentarios de ciudadanos (audiencia)
 com_file   = sorted([f for f in os.listdir(data_dir) if f.startswith("comentarios_samuel_fb")])[-1]
 df_com     = pd.read_csv(os.path.join(data_dir, com_file))
 
@@ -40,7 +38,7 @@ def limpiar(texto):
         return ""
     texto = texto.lower()
     texto = re.sub(r"http\S+|www\S+", "", texto)
-    texto = re.sub(r"<[^>]+>", "", texto)          # HTML tags
+    texto = re.sub(r"<[^>]+>", "", texto)
     return texto.strip()
 
 def tokenizar(texto):
@@ -62,178 +60,139 @@ def ngrams(tokens, n):
     return [" ".join(tokens[i:i+n]) for i in range(len(tokens)-n+1)]
 
 # ─────────────────────────────────────────
-# 1. ESTADISTICA DESCRIPTIVA BASICA
+# CALCULOS
 # ─────────────────────────────────────────
-print("\n" + "="*60)
-print("1. ESTADISTICA DESCRIPTIVA BASICA")
-print("="*60)
+fuentes = [
+    ("Samuel Garcia posts"   , df_posts, "text"),
+    ("Ciudadanos comentarios", df_com  , "texto")
+]
 
-for nombre, df, col_texto in [
-    ("SAMUEL GARCIA (posts)"   , df_posts, "text"),
-    ("CIUDADANOS (comentarios)", df_com  , "texto")
-]:
+# --- Estadistica descriptiva ---
+rows_desc = []
+for nombre, df, col in fuentes:
     df = df.copy()
-    df["texto_limpio"]   = df[col_texto].apply(limpiar)
-    df["num_palabras"]   = df["texto_limpio"].apply(lambda x: len(x.split()))
-    df["num_caracteres"] = df["texto_limpio"].apply(len)
-    df["num_oraciones"]  = df[col_texto].apply(
+    df["num_palabras"]   = df[col].apply(lambda x: len(limpiar(str(x)).split()))
+    df["num_caracteres"] = df[col].apply(lambda x: len(limpiar(str(x))))
+    df["num_oraciones"]  = df[col].apply(
         lambda x: len(re.split(r'[.!?]+', str(x))) if isinstance(x, str) else 0
     )
-
-    print(f"\n--- {nombre} ---")
-    print(f"  Total textos         : {len(df)}")
-    print(f"  Palabras por texto   : avg={df['num_palabras'].mean():.1f}  "
-          f"min={df['num_palabras'].min()}  max={df['num_palabras'].max()}  "
-          f"std={df['num_palabras'].std():.1f}")
-    print(f"  Caracteres por texto : avg={df['num_caracteres'].mean():.1f}  "
-          f"min={df['num_caracteres'].min()}  max={df['num_caracteres'].max()}")
-    print(f"  Oraciones por texto  : avg={df['num_oraciones'].mean():.1f}")
-    print(f"  Total palabras       : {df['num_palabras'].sum()}")
-
-# ─────────────────────────────────────────
-# 2. FRECUENCIA DE PALABRAS
-# ─────────────────────────────────────────
-print("\n" + "="*60)
-print("2. FRECUENCIA DE PALABRAS (top 20, sin stopwords)")
-print("="*60)
-
-for nombre, df, col_texto in [
-    ("SAMUEL GARCIA (posts)"   , df_posts, "text"),
-    ("CIUDADANOS (comentarios)", df_com  , "texto")
-]:
     todos_tokens = []
-    for texto in df[col_texto].dropna():
+    for texto in df[col].dropna():
         todos_tokens.extend(tokenizar(texto))
 
+    rows_desc.append({
+        "fuente"            : nombre,
+        "total_textos"      : len(df),
+        "total_palabras"    : int(df["num_palabras"].sum()),
+        "vocabulario_unico" : len(set(todos_tokens)),
+        "palabras_avg"      : round(df["num_palabras"].mean(), 2),
+        "palabras_max"      : int(df["num_palabras"].max()),
+        "palabras_min"      : int(df["num_palabras"].min()),
+        "palabras_std"      : round(df["num_palabras"].std(), 2),
+        "caracteres_avg"    : round(df["num_caracteres"].mean(), 2),
+        "caracteres_max"    : int(df["num_caracteres"].max()),
+        "oraciones_avg"     : round(df["num_oraciones"].mean(), 2),
+    })
+
+df_desc = pd.DataFrame(rows_desc)
+print("Estadistica descriptiva calculada")
+
+# --- Frecuencia de palabras ---
+rows_freq = []
+for nombre, df, col in fuentes:
+    todos_tokens = []
+    for texto in df[col].dropna():
+        todos_tokens.extend(tokenizar(texto))
     freq = Counter(todos_tokens)
-    print(f"\n--- {nombre} ---")
-    print(f"  Vocabulario unico: {len(freq)} palabras")
-    print(f"  Top 20 palabras:")
-    for palabra, count in freq.most_common(20):
-        barra = "#" * int(count / max(1, freq.most_common(1)[0][1]) * 20)
-        print(f"    {palabra:<20} {count:>5}  {barra}")
+    for palabra, count in freq.most_common(50):
+        rows_freq.append({
+            "fuente"    : nombre,
+            "palabra"   : palabra,
+            "frecuencia": count
+        })
 
-# ─────────────────────────────────────────
-# 3. N-GRAMAS
-# ─────────────────────────────────────────
-print("\n" + "="*60)
-print("3. N-GRAMAS MAS FRECUENTES")
-print("="*60)
+df_freq = pd.DataFrame(rows_freq)
+print("Frecuencia de palabras calculada")
 
-for nombre, df, col_texto in [
-    ("SAMUEL GARCIA (posts)"   , df_posts, "text"),
-    ("CIUDADANOS (comentarios)", df_com  , "texto")
-]:
+# --- N-gramas ---
+rows_ng = []
+for nombre, df, col in fuentes:
     todos_tokens = []
-    for texto in df[col_texto].dropna():
+    for texto in df[col].dropna():
         todos_tokens.extend(tokenizar(texto))
+    for n, tipo in [(2, "bigrama"), (3, "trigrama")]:
+        ng   = ngrams(todos_tokens, n)
+        freq = Counter(ng)
+        for gram, count in freq.most_common(20):
+            rows_ng.append({
+                "fuente"    : nombre,
+                "tipo"      : tipo,
+                "ngrama"    : gram,
+                "frecuencia": count
+            })
 
-    print(f"\n--- {nombre} ---")
-    for n, etiqueta in [(2, "Bigramas"), (3, "Trigramas")]:
-        ng    = ngrams(todos_tokens, n)
-        freq  = Counter(ng)
-        print(f"\n  {etiqueta} (top 10):")
-        for gram, count in freq.most_common(10):
-            print(f"    {gram:<35} {count}")
+df_ng = pd.DataFrame(rows_ng)
+print("N-gramas calculados")
 
-# ─────────────────────────────────────────
-# 4. USO DE SIGNOS DE PUNTUACION
-# ─────────────────────────────────────────
-print("\n" + "="*60)
-print("4. USO DE SIGNOS DE PUNTUACION")
-print("="*60)
+# --- Signos de puntuacion ---
+rows_pun = []
+for nombre, df, col in fuentes:
+    toda_pun = []
+    for texto in df[col].dropna():
+        toda_pun.extend(extraer_puntuacion(str(texto)))
+    freq = Counter(toda_pun)
+    for signo, count in freq.most_common(20):
+        rows_pun.append({
+            "fuente"    : nombre,
+            "signo"     : signo,
+            "frecuencia": count
+        })
 
-for nombre, df, col_texto in [
-    ("SAMUEL GARCIA (posts)"   , df_posts, "text"),
-    ("CIUDADANOS (comentarios)", df_com  , "texto")
-]:
-    toda_puntuacion = []
-    for texto in df[col_texto].dropna():
-        toda_puntuacion.extend(extraer_puntuacion(texto))
+df_pun = pd.DataFrame(rows_pun)
+print("Puntuacion calculada")
 
-    freq = Counter(toda_puntuacion)
-    print(f"\n--- {nombre} ---")
-    print(f"  Total signos: {len(toda_puntuacion)}")
-    print(f"  Top 15 signos:")
-    for signo, count in freq.most_common(15):
-        print(f"    '{signo}'  {count}")
-
-# ─────────────────────────────────────────
-# 5. USO DE EMOJIS
-# ─────────────────────────────────────────
-print("\n" + "="*60)
-print("5. USO DE EMOJIS")
-print("="*60)
-
-for nombre, df, col_texto in [
-    ("SAMUEL GARCIA (posts)"   , df_posts, "text"),
-    ("CIUDADANOS (comentarios)", df_com  , "texto")
-]:
-    todos_emojis = []
+# --- Emojis ---
+rows_emoji = []
+for nombre, df, col in fuentes:
+    todos_emojis    = []
     textos_con_emoji = 0
-    for texto in df[col_texto].dropna():
-        emojis = extraer_emojis(texto)
+    for texto in df[col].dropna():
+        emojis = extraer_emojis(str(texto))
         todos_emojis.extend(emojis)
         if emojis:
             textos_con_emoji += 1
-
     freq = Counter(todos_emojis)
-    pct  = textos_con_emoji / len(df) * 100 if len(df) > 0 else 0
+    for emoji, count in freq.most_common():
+        rows_emoji.append({
+            "fuente"             : nombre,
+            "emoji"              : emoji,
+            "frecuencia"         : count,
+            "textos_con_emoji"   : textos_con_emoji,
+            "total_emojis"       : len(todos_emojis),
+            "emojis_unicos"      : len(freq)
+        })
 
-    print(f"\n--- {nombre} ---")
-    print(f"  Textos con emoji     : {textos_con_emoji} ({pct:.1f}%)")
-    print(f"  Total emojis usados  : {len(todos_emojis)}")
-    print(f"  Emojis unicos        : {len(freq)}")
-    if freq:
-        print(f"  Top 15 emojis:")
-        for emoji, count in freq.most_common(15):
-            print(f"    {emoji}  {count}")
+df_emoji = pd.DataFrame(rows_emoji)
+print("Emojis calculados")
 
 # ─────────────────────────────────────────
-# 6. GUARDAR RESUMEN EN CSV
+# GUARDAR EN EXCEL CON MULTIPLES HOJAS
 # ─────────────────────────────────────────
-print("\n" + "="*60)
-print("6. GUARDANDO RESUMEN")
-print("="*60)
-
-resumen = []
-for nombre, df, col_texto in [
-    ("Samuel Garcia posts"   , df_posts, "text"),
-    ("Ciudadanos comentarios", df_com  , "texto")
-]:
-    df = df.copy()
-    df["num_palabras"]   = df[col_texto].apply(
-        lambda x: len(limpiar(str(x)).split()) if isinstance(x, str) else 0
-    )
-    df["num_emojis"]     = df[col_texto].apply(
-        lambda x: len(extraer_emojis(str(x)))
-    )
-    df["num_puntuacion"] = df[col_texto].apply(
-        lambda x: len(extraer_puntuacion(str(x)))
-    )
-
-    todos_tokens = []
-    for texto in df[col_texto].dropna():
-        todos_tokens.extend(tokenizar(texto))
-
-    resumen.append({
-        "fuente"               : nombre,
-        "total_textos"         : len(df),
-        "total_palabras"       : df["num_palabras"].sum(),
-        "vocabulario_unico"    : len(set(todos_tokens)),
-        "palabras_avg"         : round(df["num_palabras"].mean(), 2),
-        "palabras_max"         : df["num_palabras"].max(),
-        "palabras_min"         : df["num_palabras"].min(),
-        "palabras_std"         : round(df["num_palabras"].std(), 2),
-        "emojis_total"         : df["num_emojis"].sum(),
-        "emojis_avg"           : round(df["num_emojis"].mean(), 2),
-        "puntuacion_total"     : df["num_puntuacion"].sum(),
-    })
-
-df_resumen = pd.DataFrame(resumen)
 output_dir = os.path.join(base_dir, "data", "processed")
 os.makedirs(output_dir, exist_ok=True)
-path = os.path.join(output_dir, "estadistico_fb.csv")
-df_resumen.to_csv(path, index=False, encoding="utf-8-sig")
-print(f"  Guardado en: {path}")
-print(df_resumen.to_string(index=False))
+output_path = os.path.join(output_dir, "estadistico_fb.xlsx")
+
+with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
+    df_desc.to_excel(writer,  sheet_name="1_Descriptiva",   index=False)
+    df_freq.to_excel(writer,  sheet_name="2_Frecuencias",   index=False)
+    df_ng.to_excel(writer,    sheet_name="3_NGramas",       index=False)
+    df_pun.to_excel(writer,   sheet_name="4_Puntuacion",    index=False)
+    df_emoji.to_excel(writer, sheet_name="5_Emojis",        index=False)
+
+print(f"\nArchivo guardado en: {output_path}")
+print("\nHojas generadas:")
+print("  1_Descriptiva  -> estadistica basica por fuente")
+print("  2_Frecuencias  -> top 50 palabras por fuente")
+print("  3_NGramas      -> bigramas y trigramas por fuente")
+print("  4_Puntuacion   -> signos de puntuacion por fuente")
+print("  5_Emojis       -> emojis usados por fuente")

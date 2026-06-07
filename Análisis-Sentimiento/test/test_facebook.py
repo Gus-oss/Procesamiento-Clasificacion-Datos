@@ -8,7 +8,7 @@ ext = FacebookExtractor()
 
 df_posts, df_comments = ext.run_pipeline(
     page_url     = "https://www.facebook.com/SAMUELGARCIASEPULVEDA/",
-    max_posts    = 3,
+    max_posts    = 20,
     max_comments = 50
 )
 

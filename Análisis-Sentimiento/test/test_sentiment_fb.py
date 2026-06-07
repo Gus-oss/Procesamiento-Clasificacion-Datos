@@ -1,9 +1,12 @@
 # test_sentiment_fb.py
-import pandas as pd
-import os
-from processors.sentiment import SentimentAnalyzer
+# test/test_sentiment.py
 import sys
+import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import pandas as pd
+from processors.sentiment import SentimentAnalyzer
 
 # Cargar comentarios de Facebook
 base_dir = os.path.dirname(os.path.abspath(__file__))
