@@ -9,7 +9,7 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 
 # Tareas:
 
- - Tarea 2: **Objetivo:** Elegir un conjunto de datos de reseñas de usuarios y realizarles un método de vectorización adecuado ademas de estudiar sus proiedades. Finalmente realizar un análisis de sentimiento al conjunto de datos. **Solución:** Se descargaron 
+ - Tarea 2: **Objetivo:** Elegir un conjunto de datos de reseñas de usuarios y realizarles un método de vectorización adecuado ademas de estudiar sus proiedades. Finalmente realizar un análisis de sentimiento al conjunto de datos. **Solución:** Se descargaron los comentarios de los videos de Adrian de la Garza utilizando la API de Youtube en Google Cloude Platform por medio del codigo [youtube_extractor.py](pipeline\extractors\youtube_extractor.py) y procesado mediante pysentimiento utilizando robertuito en el codigo [sentiment.py](pipeline\processors\sentiment.py). El resultado obtenido de la extracción se encuentra en la carpeta (raw)[pipeline\data\raw] , mientras que en el documento (sentimiento.xlsx)[pipeline\data\processed\sentimiento_adg_20260605.csv] se encuentra el análisis de sentimiento obtenido. 
 
 
 ```bash
