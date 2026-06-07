@@ -44,7 +44,7 @@ df_result = analyzer.analyze_dataframe(df, text_col="texto")
 # ─────────────────────────────────────────
 # Guardar resultados
 # ─────────────────────────────────────────
-analyzer.save(df_result, "sentimiento_adg")
+analyzer.save(df_result, "sentimiento_sg_yt")
 
 # Vista previa
 print("\nMuestra de resultados:")
