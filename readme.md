@@ -9,8 +9,8 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 
 # Tareas
  ## Tarea 1
-  - **Objetivo** Realizar un análisis estadistico sobre algún origen de datos textual (libros, publicaciones en redes sociales, entradas de blog, discursos politicos,...) sobre dos o mas fuentes de uno o mas autores. Análizar estadistica descriptiva basica, frcuencias, discuros de palabras , n-gramas, usos de signo de puntuación, emojis, etc. 
-  - **Solución**
+  - **Objetivo:** Realizar un análisis estadistico sobre algún origen de datos textual (libros, publicaciones en redes sociales, entradas de blog, discursos politicos,...) sobre dos o mas fuentes de uno o mas autores. Análizar estadistica descriptiva basica, frcuencias, discuros de palabras , n-gramas, usos de signo de puntuación, emojis, etc. 
+  - **Solución:** Se extrajo los comentarios de 20 post en Facebook del Gobernador Samuel Garcia con 50 comentarios cada uno utilizando el codigo [facebook_extractor.py](Análisis-Sentimiento\extractors\facebook_extractor.py). El resultado se le implementaron [pruebas estadisticas](Análisis-Sentimiento\data\processed\estadistico_fb.xlsx) para determinar las caracteristicas de los datos. 
  ## Tarea 2: 
   - **Objetivo:** Elegir un conjunto de datos de reseñas de usuarios y realizarles un método de vectorización adecuado ademas de estudiar sus proiedades. Finalmente realizar un análisis de sentimiento al conjunto de datos. 
   - **Solución:** Se descargaron los comentarios de los videos de Adrian de la Garza utilizando la API de Youtube en Google Cloude Platform por medio del codigo [youtube_extractor.py](Análisis-Sentimiento\extractors\youtube_extractor.py) y procesado mediante pysentimiento utilizando robertuito en el codigo [sentiment.py](Análisis-Sentimiento\processors\sentiment.py). El resultado obtenido de la extracción se encuentra en la carpeta [raw](Análisis-Sentimiento\data\raw) , mientras que en el documento [sentimiento.xlsx](Análisis-Sentimiento\data\processed) se encuentra el análisis de sentimiento obtenido. 
