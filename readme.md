@@ -50,3 +50,8 @@ Análisis-Sentimiento/
 
 ## Seguimiento: 
 - [05/06/2026] : se probo para Twetter, pero twetter ya no permite hacer descargas de tweters gratuitos. Se evalua la opcion de pagar la suscripción de 1000 USD al mes para extraer la información. 
+
+# Programas
+APIfy https://console.apify.com/
+Google Cloud Platform: Youtube API 
+X for Developers
