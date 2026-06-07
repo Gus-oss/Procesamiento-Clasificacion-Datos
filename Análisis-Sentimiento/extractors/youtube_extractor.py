@@ -21,7 +21,7 @@ class YouTubeExtractor:
     # ─────────────────────────────────────────
     # 1. Buscar canal
     # ─────────────────────────────────────────
-    def get_channel_id(self, query="Adrian de la Garza Nuevo Leon"):
+    def get_channel_id(self, query="Samuel García Nuevo Leon"):
         print(f"\n Buscando canal: {query}")
         request = self.youtube.search().list(
             part="snippet",
@@ -45,7 +45,7 @@ class YouTubeExtractor:
     # ─────────────────────────────────────────
     # 2. Buscar videos donde aparece o lo mencionan
     # ─────────────────────────────────────────
-    def search_videos(self, query="Adrian de la Garza", max_results=50):
+    def search_videos(self, query="Samuel García", max_results=50):
         print(f"\n Buscando videos: '{query}'")
         videos = []
         next_page_token = None

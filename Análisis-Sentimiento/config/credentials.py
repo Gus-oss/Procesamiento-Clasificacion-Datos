@@ -22,5 +22,5 @@ YOUTUBE_CONFIG = {
 
 TARGET = {
     "twitter_handle" : "AdriandelaGarza",
-    "nombre"         : "Adrian de la Garza"
+    "nombre"         : "Samuel García"
 }
