@@ -20,6 +20,10 @@ YOUTUBE_CONFIG = {
     "api_key" : os.getenv("YOUTUBE_API_KEY")
 }
 
+APIFY_CONFIG = {
+    "api_token" : os.getenv("APIFY_API_TOKEN")
+}
+
 TARGET = {
     "twitter_handle" : "AdriandelaGarza",
     "nombre"         : "Samuel García"
