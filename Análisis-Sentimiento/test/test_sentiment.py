@@ -1,9 +1,9 @@
-# test_sentiment.py
-import pandas as pd
-import os
-from processors.sentiment import SentimentAnalyzer
 import sys
+import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import pandas as pd
+from processors.sentiment import SentimentAnalyzer
 
 # ─────────────────────────────────────────
 # Cargar comentarios extraídos
