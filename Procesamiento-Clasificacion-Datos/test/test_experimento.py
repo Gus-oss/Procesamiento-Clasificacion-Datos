@@ -90,25 +90,31 @@ res_robertuito = exp.evaluate_transformer(
 )
 resultados.append(res_robertuito)
 
-# ─────────────────────────────────────────
-# EXPERIMENTO 5 — BETO
-# ─────────────────────────────────────────
-res_beto = exp.evaluate_transformer(
-    model_name = "BETO",
-    model_id   = "dccuchile/bert-base-spanish-wwm-cased",
+# EXPERIMENTO 5 — MarIA RoBERTa (fine-tuned en politica y TASS)
+res_maria = exp.evaluate_transformer(
+    model_name = "MarIA-RoBERTa",
+    model_id   = "UMUTeam/roberta-spanish-sentiment-analysis",
     label_map  = {"LABEL_0": "NEG", "LABEL_1": "NEU", "LABEL_2": "POS"}
 )
-resultados.append(res_beto)
+resultados.append(res_maria)
 
-# ─────────────────────────────────────────
-# EXPERIMENTO 6 — XLM-RoBERTa
-# ─────────────────────────────────────────
+# EXPERIMENTO 6 — XLM-RoBERTa Twitter (label_map corregido)
 res_xlm = exp.evaluate_transformer(
     model_name = "XLM-RoBERTa",
     model_id   = "cardiffnlp/twitter-xlm-roberta-base-sentiment",
-    label_map  = {"Negative": "NEG", "Neutral": "NEU", "Positive": "POS"}
+    label_map  = {"negative": "NEG", "neutral": "NEU", "positive": "POS"}
 )
 resultados.append(res_xlm)
+
+# EXPERIMENTO 7 — DistilBERT Multilenguaje
+res_distil = exp.evaluate_transformer(
+    model_name = "DistilBERT-Multi",
+    model_id   = "tabularisai/multilingual-sentiment-analysis",
+    label_map  = {"Very Negative": "NEG", "Negative": "NEG",
+                  "Neutral"      : "NEU",
+                  "Positive"     : "POS", "Very Positive": "POS"}
+)
+resultados.append(res_distil)
 
 # ─────────────────────────────────────────
 # MATRICES DE CONFUSION (ultimo fold de cada modelo)
@@ -150,4 +156,6 @@ df_rank = pd.DataFrame(resultados).sort_values("f1_macro_avg", ascending=False)
 df_rank.insert(0, "ranking", range(1, len(df_rank)+1))
 
 print(df_rank[["ranking", "modelo", "f1_macro_avg",
-               "accuracy_avg", "tiempo_seg"]].to_string(index=False))
+               "f1_macro_std", "accuracy_avg",
+               "precision_avg", "recall_avg",
+               "tiempo_seg"]].to_string(index=False))
