@@ -44,12 +44,13 @@ Procesamiento-Clasificacion-Datos/
 │   └── sentiment.py         # Análisis de sentimientos
 │
 ├── test/
-│   ├── test_estadistico.py     # Datos crudos
-│   ├── test_facebook.py        # Datos crudos
-│   ├── test_sentimient_fb.py   # Datos crudos
-│   ├── test_sentimient.py      # Datos crudos
-│   ├── test_twitter.py         # Datos crudos
-│   └── test_youtube.py         # Datos limpios
+│   ├── test_estadistico.py     
+│   ├── test_experimento.py     
+│   ├── test_facebook.py        
+│   ├── test_sentimient_fb.py   
+│   ├── test_sentimient.py      
+│   ├── test_twitter.py         
+│   └── test_youtube.py         
 │
 │
 └── main.py                  # Orquestador del pipeline
