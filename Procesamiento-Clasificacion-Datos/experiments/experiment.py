@@ -1,4 +1,3 @@
-# experiment.py
 # experiments/experiment.py
 import sys
 import os
