@@ -22,11 +22,18 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 # Estructura del proyecto
 
 ```bash
-Análisis-Sentimiento/
+Procesamiento-Clasificacion-Datos/
 │
 ├── config/
 │   └── credentials.py      
 │
+├── data/
+│   ├── raw/                 # Datos crudos
+│   └── processed/           # Datos limpios
+│
+├── experiments/
+│   └── experiment.py        #Experimentos
+│   
 ├── extractors/
 │   ├── facebook_extractor.py
 │   ├── twitter_extractor.py
@@ -36,9 +43,13 @@ Análisis-Sentimiento/
 │   ├── cleaner.py           # Limpieza de texto
 │   └── sentiment.py         # Análisis de sentimientos
 │
-├── data/
-│   ├── raw/                 # Datos crudos
-│   └── processed/           # Datos limpios
+├── test/
+│   ├── test_estadistico.py     # Datos crudos
+│   ├── test_facebook.py        # Datos crudos
+│   ├── test_sentimient_fb.py   # Datos crudos
+│   ├── test_sentimient.py      # Datos crudos
+│   ├── test_twitter.py         # Datos crudos
+│   └── test_youtube.py         # Datos limpios
 │
 │
 └── main.py                  # Orquestador del pipeline
