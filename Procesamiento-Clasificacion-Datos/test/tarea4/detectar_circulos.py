@@ -14,7 +14,7 @@ from pathlib import Path
 # ── Rutas ──────────────────────────────────────────────────────────────────────
 
 BASE_DIR    = Path(__file__).resolve().parents[2]
-IMAGE_PATH  = BASE_DIR / "data" / "raw" / "tarea4" / "señales-de-trafico.webp"
+IMAGE_PATH  = BASE_DIR / "data" / "raw" / "tarea4" / "senales-de-trafico.webp"
 OUTPUT_PATH = BASE_DIR / "data" / "processed" / "tarea4" / "resultado_circulos.jpg"
 REPORT_PATH = BASE_DIR / "data" / "processed" / "tarea4" / "reporte.md"
 
