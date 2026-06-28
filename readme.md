@@ -17,7 +17,14 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 ## Tarea 3:
   - **Objetivo:** Hacer un diseño de experimentos para comparar modelos y sus hiperparametros con relación a la clasificación de textos. 
   - **Solución:** Se realizo un análisis de experimentos con los modelos tranformers robertuito (base), XLM-RoBERTa, DistilBERT-Multi, MarlA-ROBERTa y modelos clasicos como Naive Bayes y SVM Lineal C=1 y C=0. El mejor modelo, comparando como robertuito, es XLM-RoBERTa teniendo una metrica de 0.7534 de f1 tardando un tiempo total de 283.24 segundos. Los demas resultados se encuentran en el documento [experimento_clasificacion.xlsx](Procesamiento-Clasificacion-Datos\data\processed\experimento_clasificacion.xlsx)
-  
+
+## Tarea 4: 
+  - **Objetivo:** Realizar algun procesamiento de imagenes, identificación de centros con openCV. 
+  - **Solución:**
+
+## Tarea 5: 
+  - **Objetivo:** Realizar una aplicación de redes neuronales convencionales para clasificar , segmentar o detectar objetos en imagenes. 
+  - **Solución:**  
 
 
 # Estructura del proyecto
