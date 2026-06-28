@@ -20,7 +20,7 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 
 ## Tarea 4: 
   - **Objetivo:** Realizar algun procesamiento de imagenes, identificación de centros con openCV. 
-  - **Solución:**
+  - **Solución:** Se utilizo una imagne de referencia para obtener los ciculos de las señales de transito. El resultado fue la deteccion correcta de cada circulo de la imagen, dicha informacion se encuentra en el [reporte.](Procesamiento-Clasificacion-Datos\data\processed\tarea4\reporte.md)
 
 ## Tarea 5: 
   - **Objetivo:** Realizar una aplicación de redes neuronales convencionales para clasificar , segmentar o detectar objetos en imagenes. 
