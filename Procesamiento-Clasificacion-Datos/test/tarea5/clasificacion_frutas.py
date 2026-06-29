@@ -46,13 +46,20 @@ def descargar_dataset():
     try:
         import kagglehub
         path = kagglehub.dataset_download("moltean/fruits")
-        # El dataset tiene subcarpetas Training/ y Test/
-        train_dir = os.path.join(path, "fruits-360_dataset", "fruits-360", "Training")
-        test_dir  = os.path.join(path, "fruits-360_dataset", "fruits-360", "Test")
-        if not os.path.exists(train_dir):
-            # Estructura alternativa segun version del dataset
-            train_dir = os.path.join(path, "Training")
-            test_dir  = os.path.join(path, "Test")
+
+        # Buscar Training/ y Test/ de forma automatica en cualquier version
+        train_dir, test_dir = None, None
+        for root, dirs, _ in os.walk(path):
+            if "Training" in dirs and "Test" in dirs:
+                train_dir = os.path.join(root, "Training")
+                test_dir  = os.path.join(root, "Test")
+                break
+
+        if train_dir is None:
+            raise FileNotFoundError(
+                f"No se encontraron las carpetas Training/Test dentro de {path}. "
+                "Verifica la estructura del dataset descargado."
+            )
         print(f"Dataset descargado en: {path}")
         return train_dir, test_dir
     except ImportError:
