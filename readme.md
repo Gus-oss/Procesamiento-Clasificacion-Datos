@@ -24,7 +24,7 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
 
 ## Tarea 5: 
   - **Objetivo:** Realizar una aplicación de redes neuronales convencionales para clasificar , segmentar o detectar objetos en imagenes. 
-  - **Solución:**  
+  - **Solución:** Se implemento un casificador de frutas con ayuda del conjunto de datos Fruits-360 de Kaggle.Los resultados obtenidos fueron : CNN Scratch — 100% en 42 min, VGG16 Transfer — 95.5% en 93 min y ResNet50 Fine-tuning — 80.72% en 64 min.En datasets de dominio muy específico con baja variabilidad visual (fondo uniforme, objeto centrado), una CNN entrenada desde cero puede superar a modelos con Transfer Learning. El Transfer Learning muestra su ventaja real cuando los datos son escasos o el dominio es complejo. El Fine-tuning requiere más epochs de entrenamiento para converger correctamente.
 
 
 # Estructura del proyecto
