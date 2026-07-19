@@ -26,6 +26,9 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
   - **Objetivo:** Realizar una aplicación de redes neuronales convencionales para clasificar , segmentar o detectar objetos en imagenes. 
   - **Solución:** Se implemento un casificador de frutas con ayuda del conjunto de datos Fruits-360 de Kaggle.Los resultados obtenidos fueron : CNN Scratch — 100% en 42 min, VGG16 Transfer — 95.5% en 93 min y ResNet50 Fine-tuning — 80.72% en 64 min.En datasets de dominio muy específico con baja variabilidad visual (fondo uniforme, objeto centrado), una CNN entrenada desde cero puede superar a modelos con Transfer Learning. El Transfer Learning muestra su ventaja real cuando los datos son escasos o el dominio es complejo. El Fine-tuning requiere más epochs de entrenamiento para converger correctamente.
 
+## Trea 6:
+  - **Objetivo:** Implementar una comparación entre distintos tipos de audios.
+  - **Solución:** Se utilizo un [audio](C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\bisicleta_alquiler.mp3) el cual conto con opiniones dividias sobre si dice "alquiler" o "bicicleta". Se extrajo el audio original y se comparo con las palabras aisladas de "bicicleta" y "alquiler" obeniendo una distancia respecto a la palabra "bicicleta" de 17245.18 y para la palabra "alquiler" 15158.16, obteniendo que la palabra que el audio dice corresponda a la palabra "alquiler".
 
 # Estructura del proyecto
 
