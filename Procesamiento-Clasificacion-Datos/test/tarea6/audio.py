@@ -11,10 +11,10 @@ from playsound import playsound
 from gtts import gTTS #Generar audio a partir de texto
 
 #Reproducir el audio
-#playsound(r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea7\bisicleta_alquiler.mp3')
+#playsound(r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\bisicleta_alquiler.mp3')
 
 #Cargar el audio
-audio, sr = librosa.load(r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea7\bisicleta_alquiler.mp3')
+audio, sr = librosa.load(r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\bisicleta_alquiler.mp3')
 
 #===========================================================================================
 #Funcion que quita el silencio del audio
@@ -52,10 +52,10 @@ plt.xlabel("Tiempo(s)")
 plt.ylabel("Amplitud")
 # Guardar imagen en la ruta deseada
 plt.savefig(
-    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea7\audio_plot.png',
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\audio_plot.png',
     dpi=300, bbox_inches='tight'
 )
-plt.show()
+#plt.show()
 
 #Eliminar el silencio del audio
 audio = quitar_silencio(audio)
@@ -63,15 +63,15 @@ audio = quitar_silencio(audio)
 #probar si funciona el quitar silencio
 plt.figure()
 plt.plot(audio)
-plt.title("Señal de audio sin ruido")
+plt.title("Señal de audio original sin ruido")
 plt.xlabel("Tiempo(s)")
 plt.ylabel("Amplitud")
 # Guardar imagen en la ruta deseada
 plt.savefig(
-    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea7\audio_sin_ruido.png',
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\audio_sin_ruido.png',
     dpi=300, bbox_inches='tight'
 )
-plt.show()
+#plt.show()
 #============================================================================================
 # Calcular MFCC para el audio original sin ruido
 #============================================================================================
@@ -79,24 +79,24 @@ mfccs_audio = obtener_mfcc(audio, sr)
 
 plt.figure()
 librosa.display.specshow(mfccs_audio, x_axis='time', sr=sr)
-plt.title("Coeficientes MFCC")
+plt.title("Coeficientes MFCC audio original")
 plt.ylabel("Coeficiente")
 plt.xlabel("Tiempo(s)")
 plt.colorbar(format='%+2.0f dB')
 plt.savefig(
-    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea7\audio_mfcc.png',
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\audio_mfcc.png',
     dpi=300, bbox_inches='tight'
 )
-plt.show()
+#plt.show()
 
 #===========================================================================================
 # Generar audio de "bicicleta"
 #===========================================================================================
 tts = gTTS("bicicleta", lang="es")
-tts.save(r"C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea7\bicicleta.mp3")
+tts.save(r"C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\bicicleta.mp3")
 
 # Cargar el audio guardado
-bic, sr_bic = librosa.load(r"C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea7\bicicleta.mp3")
+bic, sr_bic = librosa.load(r"C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\bicicleta.mp3")
 
 plt.figure()
 plt.plot(bic)
@@ -105,7 +105,94 @@ plt.xlabel("Tiempo(s)")
 plt.ylabel("Amplitud")
 # Guardar imagen en la ruta deseada
 plt.savefig(
-    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea7\bic.png',
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\bic.png',
     dpi=300, bbox_inches='tight'
 )
-plt.show()
+#plt.show()
+
+#Eliminar el silencio del audio
+bic = quitar_silencio(bic)
+
+#probar si funciona el quitar silencio
+plt.figure()
+plt.plot(bic)
+plt.title("Señal de bicicleta sin ruido")
+plt.xlabel("Tiempo(s)")
+plt.ylabel("Amplitud")
+# Guardar imagen en la ruta deseada
+plt.savefig(
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\bic_sin_ruido.png',
+    dpi=300, bbox_inches='tight'
+)
+#plt.show()
+
+#============================================================================================
+# Calcular MFCC para el audio bic sin ruido
+#============================================================================================
+mfccs_bic = obtener_mfcc(bic, sr_bic)
+
+plt.figure()
+librosa.display.specshow(mfccs_bic, x_axis='time', sr=sr_bic)
+plt.title("Coeficientes MFCC bicicleta")
+plt.ylabel("Coeficiente")
+plt.xlabel("Tiempo(s)")
+plt.colorbar(format='%+2.0f dB')
+plt.savefig(
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\bic_mfcc.png',
+    dpi=300, bbox_inches='tight'
+)
+#plt.show()
+
+#===========================================================================================
+# Generar audio de "alquiler"
+#===========================================================================================
+tts = gTTS("alquiler", lang="es")
+tts.save(r"C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\alquiler.mp3")
+
+# Cargar el audio guardado
+alq, sr_alq = librosa.load(r"C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\alquiler.mp3")
+
+plt.figure()
+plt.plot(alq)
+plt.title("Señal de audio: alquiler")
+plt.xlabel("Tiempo(s)")
+plt.ylabel("Amplitud")
+# Guardar imagen en la ruta deseada
+plt.savefig(
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\alq.png',
+    dpi=300, bbox_inches='tight'
+)
+#plt.show()
+
+#Eliminar el silencio del audio
+alq = quitar_silencio(alq)
+
+#probar si funciona el quitar silencio
+plt.figure()
+plt.plot(alq)
+plt.title("Señal de audio alquiler sin ruido")
+plt.xlabel("Tiempo(s)")
+plt.ylabel("Amplitud")
+# Guardar imagen en la ruta deseada
+plt.savefig(
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\alq_sin_ruido.png',
+    dpi=300, bbox_inches='tight'
+)
+#plt.show()
+
+#============================================================================================
+# Calcular MFCC para el audio alq sin ruido
+#============================================================================================
+mfccs_alq = obtener_mfcc(alq, sr_alq)
+
+plt.figure()
+librosa.display.specshow(mfccs_alq, x_axis='time', sr=sr_alq)
+plt.title("Coeficientes MFCC alquiler")
+plt.ylabel("Coeficiente")
+plt.xlabel("Tiempo(s)")
+plt.colorbar(format='%+2.0f dB')
+plt.savefig(
+    r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\processed\tarea6\alq_mfcc.png',
+    dpi=300, bbox_inches='tight'
+)
+#plt.show()
