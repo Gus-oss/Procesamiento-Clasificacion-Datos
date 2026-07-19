@@ -9,6 +9,7 @@ import numpy as np
 import IPython
 from playsound import playsound
 from gtts import gTTS #Generar audio a partir de texto
+from dtw import dtw #compara las distancias euclidianas
 
 #Reproducir el audio
 #playsound(r'C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\bisicleta_alquiler.mp3')
@@ -42,6 +43,18 @@ def obtener_mfcc(audio, sr):
     )
 
     return mfcc
+#============================================================================================
+#Funcion para comparar dos audios y obtener la distancia euclidiana entre sus mfcc
+#============================================================================================
+def distancia(mfcc1, mfcc2):
+
+    alignment = dtw(
+        mfcc1.T,
+        mfcc2.T,
+        keep_internals=True
+    )
+
+    return alignment.distance
 #============================================================================================
 # Graficar señal-audio
 #============================================================================================
@@ -196,3 +209,31 @@ plt.savefig(
     dpi=300, bbox_inches='tight'
 )
 #plt.show()
+
+
+#===========================================================================================
+# Comparar los audios y obtener la distancia euclidiana entre sus mfcc
+#===========================================================================================
+# Distancia entre el audio de prueba y "bicicleta"
+distancia_bic = distancia(mfccs_audio, mfccs_bic)
+
+# Distancia entre el audio de prueba y "alquiler"
+distancia_alq = distancia(mfccs_audio, mfccs_alq)
+
+print("="*60)
+print("Distancias obtenidas")
+print("="*60)
+print(f"Distancia con 'bicicleta' : {distancia_bic:.2f}")
+print(f"Distancia con 'alquiler'  : {distancia_alq:.2f}")
+print("="*60)
+
+# Decisión
+if distancia_bic < distancia_alq:
+    print("RESULTADO: El audio se parece más a 'bicicleta'")
+else:
+    print("RESULTADO: El audio se parece más a 'alquiler'")
+
+# Diferencia entre ambas distancias
+diferencia = abs(distancia_bic - distancia_alq)
+
+print(f"\nDiferencia entre distancias: {diferencia:.2f}")
