@@ -30,6 +30,8 @@ Este es el repositorio de la materia de Datos Masivos de la Maestria de Ciencia 
   - **Objetivo:** Implementar una comparación entre distintos tipos de audios.
   - **Solución:** Se utilizo un [audio](C:\Users\PC\Documents\DocumentosGustavo\Github\Maestria\Procesamiento-Clasificacion-Datos\Procesamiento-Clasificacion-Datos\data\raw\tarea6\bisicleta_alquiler.mp3) el cual conto con opiniones dividias sobre si dice "alquiler" o "bicicleta". Se extrajo el audio original y se comparo con las palabras aisladas de "bicicleta" y "alquiler" obeniendo una distancia respecto a la palabra "bicicleta" de 17245.18 y para la palabra "alquiler" 15158.16, obteniendo que la palabra que el audio dice corresponda a la palabra "alquiler".
 
+## Tarea 7: 
+
 # Estructura del proyecto
 
 ```bash
